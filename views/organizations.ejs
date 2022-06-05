@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title> <%= pageTitle %> </title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+</head>
+
+<body>
+    
+    <div id="editModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+      
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Organization</h4>
+            </div>
+            <div class="modal-body">
+                <form id="modal-form">
+                    <div style="text-align: center;">
+                        <input type="text" name="id" id="id" readonly></br>
+                        <input type="text" name="abbreviation" id="abbreviation"></br>
+                        <input type="text" name="name" id="name"></br>
+                        <input type="text" name="str_name" id="str_name"></br>
+                        <input type="text" name="str_num" id="str_num"></br>
+                        <input type="text" name="zip" id="zip"></br>
+                        <input type="text" name="city" id="city"></br>
+                        <input type="text" name="type" id="type">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="modal-form" class="btn btn-success">Update</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+      
+        </div>
+    </div>
+
+    <%- include("includes/navbar.ejs")%>
+
+    <div class="container">
+        <div class="row" id="row">
+            <div class="col-md-12">
+                <div class="card" id="card-container">
+                    <div class="card-body" id="card">
+                        <a class="btn btn-primary" id="show-btn" href="/organizations/org-with-same-num-of-projects"
+                >Organizations with the same number of projects (>=10) on two sequential years</a>
+                <a class="btn btn-primary" id="show-btn" href="/organizations/organization-projects-view"
+                >View of Relational Schema with projects per organization</a>
+                    <% if (organizations.length == 0) { %> 
+                        <h1 style="margin-top: 5rem;">No Organizations found!</h1>
+                    <% } else { %>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Abbreviation</th>
+                                        <th>Street Name</th>
+                                        <th>Street Number</th>
+                                        <th>Zip Code</th>
+                                        <th>City</th>
+                                        <th>Type</th>
+                                        <th>Last Update</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% organizations.forEach((organization, _) => { %>
+                                        <tr>
+                                            <td><%= organization.organization_id %></td>
+                                            <td><%= organization.name %></td>
+                                            <td><%= organization.abbreviation %></td>
+                                            <td><%= organization.street_name %></td>
+                                            <td><%= organization.street_number %></td>
+                                            <td><%= organization.zip_code %></td>
+                                            <td><%= organization.city %></td>
+                                            <td><%= organization.organization_type %></td>
+                                            <td><%= organization.last_update %></td>
+                                            <td>
+                                                <a href="/organizations/phones?id=<%= organization.organization_id %>"><button style="all: unset; cursor: pointer;" type="submit"><i class="fa fa-phone"></i></button></a>
+                                            </td>
+                                            <td>
+                                                <form method="POST" action="/organizations/delete/<%= organization.organization_id %>">
+                                                <td> 
+                                                    <button style="all: unset; cursor: pointer;" type="submit"><i class="fa fa-trash"></i></button>
+                                                </td>
+                                            </form>
+                                            </td>
+                                            <td>
+                                                <a type="button" style="cursor: pointer" onclick="setModalFields(this)"
+                                                    data-toggle="modal" data-id="<%= organization.organization_id %>" 
+                                                    data-abbreviation="<%= organization.abbreviation %>" data-name="<%= organization.name %>"
+                                                    data-str_name="<%= organization.street_name %>" data-str_num="<%= organization.street_number %>" data-zip="<%= organization.zip_code %>" data-city="<%= organization.city %>" data-type="<%= organization.organization_type %>" 
+                                                    data-target="#editModal">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                    <a class="btn btn-primary" id="show-btn" href="/organizations/organization-creation-page"
+                >+ Add Organization</a>
+                                </tbody>
+                            </table>
+                        </div>
+                    <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setModalFields(row) {
+            document.getElementById("id").value = row.dataset.id;
+            document.getElementById("abbreviation").value = row.dataset.abbreviation;
+            document.getElementById("name").value = row.dataset.name;
+            document.getElementById("str_name").value = row.dataset.str_name;
+            document.getElementById("str_num").value = row.dataset.str_num;
+            document.getElementById("zip").value = row.dataset.zip;
+            document.getElementById("city").value = row.dataset.city;
+            document.getElementById("type").value = row.dataset.type;
+
+            document.getElementById("modal-form").action = "/organizations/update/" + row.dataset.id;
+            document.getElementById("modal-form").method = "POST";
+        }
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            toastr.options = {
+                "closeButton": true,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": false
+            };
+            /* In order to access variables sent to ejs file to script you must Parse them to string */
+            /* then to parse them back to JSON */
+            let messages = '<%- JSON.stringify(messages) %>';
+            messages = JSON.parse(messages);
+            messages.forEach(({
+                type,
+                value
+            }) => {
+                switch (type) {
+                    case 'error':
+                        toastr.error(value)
+                        break;
+                    case 'success':
+                        toastr.success(value)
+                        break;
+                    case 'warning':
+                        toastr.warning(value)
+                        break;
+                    default:
+                        toastr.info(value)
+                        break;
+                }
+            });
+        })
+    </script>
+</body>
+</html>

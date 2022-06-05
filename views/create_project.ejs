@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title> <%= pageTitle %> </title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+
+<body>
+    
+    <%- include("includes/navbar.ejs")%>
+    <div class="container">
+        <div class="row" id="row">
+            <div class="col-md-12">
+                <form class="form-horizontal" name="name" action="/projects/create" method="POST">
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" name="title" placeholder="Enter title">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="summary">Summary</label>
+                        <input type="text" class="form-control" name="summary" placeholder="Enter summary" style="width: 500px; height: 200px">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="amount">Amount</label>
+                        <input type="text" class="form-control" name="amount" placeholder="Enter amount">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="entry_date">Entry Date</label>
+                        <input type="text" class="form-control" name="entry_date" placeholder="Enter entry date">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="due_dat">Due Date</label>
+                        <input type="text" class="form-control" name="due_date" placeholder="Enter due date">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="program_id">Program ID</label>
+                        <input type="text" class="form-control" name="program_id" placeholder="Enter program ID">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="executive_id">Executive ID</label>
+                        <input type="text" class="form-control" name="executive_id" placeholder="Enter executive ID">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="org_id">Organization ID</label>
+                        <input type="text" class="form-control" name="org_id" placeholder="Enter organization ID">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="supervisor_id">Supervisor ID</label>
+                        <input type="text" class="form-control" name="supervisor_id" placeholder="Enter supervisor ID">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="reviewer_id">Reviewer ID</label>
+                        <input type="text" class="form-control" name="reviewer_id" placeholder="Enter reviewer ID">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="grade">Review Grade</label>
+                        <input type="text" class="form-control" name="grade" placeholder="Enter grade">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="review_date">Review Date</label>
+                        <input type="text" class="form-control" name="review_date" placeholder="Enter review date">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-submit-custom">Submit</button>
+                </form>
+        </div>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title> <%= pageTitle %> </title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+</head>
+
+<body>
+    
+    <div id="editModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+      
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Projects</h4>
+            </div>
+            <div class="modal-body">
+                <form id="modal-form">
+                    <div style="text-align: center;">
+                        <input type="text" name="id" id="id" readonly></br>
+                        <input type="text" name="title" id="title"></br>
+                        <input type="text" name="summary" id="summary"></br>
+                        <input type="text" name="amount" id="amount"></br>
+                        <input type="text" name="entry_date" id="entry_date"></br>
+                        <input type="text" name="due_date" id="due_date"></br>
+                        <input type="text" name="grade" id="grade"></br>
+                        <input type="text" name="review_date" id="review_date"></br>
+                        <input type="text" name="reviewer_id" id="reviewer_id"></br>
+                        <input type="text" name="supervisor_id" id="supervisor_id"></br>
+                        <input type="text" name="organization_id" id="organization_id"></br>
+                        <input type="text" name="executive_id" id="executive_id"></br>
+                        <input type="text" name="program_id" id="program_id">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="modal-form" class="btn btn-success">Update</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <%- include("includes/navbar.ejs")%>
+
+    <div class="container">
+        <div class="row" id="row">
+            <div class="col-md-12">
+                <div class="card" id="card-container">
+                    <div class="card-body" id="card">
+                    <% if (projects.length == 0) { %> 
+                        <h1 style="margin-top: 5rem;">No Projects found!</h1>
+                    <% } else { %>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Title</th>
+                                        <th>Summary</th>
+                                        <th>Amount</th>
+                                        <th>Entry Date</th>
+                                        <th>Due Date</th>
+                                        <th>Review Grade</th>
+                                        <th>Review Date</th>
+                                        <th>Reviewer ID</th>
+                                        <th>Supervisor ID</th>
+                                        <th>Organization ID</th>
+                                        <th>Executive ID</th>
+                                        <th>Program ID</th>
+                                        <th>Last Update</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% projects.forEach((project, _) => { %>
+                                        <tr>
+                                            <td><%= project.project_id %></td>
+                                            <td><%= project.title %></td>
+                                            <td><%= project.summary %></td>
+                                            <td><%= project.amount %></td>
+                                            <td><%= project.entry_date %></td>
+                                            <td><%= project.due_date %></td>
+                                            <td><%= project.review_grade %></td>
+                                            <td><%= project.review_date %></td>
+                                            <td><%= project.reviewer_id %></td>
+                                            <td><%= project.supervisor_id %></td>
+                                            <td><%= project.organization_id %></td>
+                                            <td><%= project.executive_id %></td>
+                                            <td><%= project.program_id %></td>
+                                            <td><%= project.last_update %></td>
+                                            <td>
+                                                <a href="/projects/deliverables?id=<%= project.project_id %>"><button style="all: unset; cursor: pointer;" type="submit">Deliverables</button></a>
+                                            </td>
+                                            <td>
+                                                <a href="/projects/fields?id=<%= project.project_id %>"><button style="all: unset; cursor: pointer;" type="submit">Fields</button></a>
+                                            </td>
+                                            <td>
+                                                <form method="POST" action="/projects/delete/<%= project.project_id %>">
+                                                <td> 
+                                                    <button style="all: unset; cursor: pointer;" type="submit"><i class="fa fa-trash"></i></button>
+                                                </td>
+                                            </form>
+                                            </td>
+                                            <td>
+                                                <a type="button" style="cursor: pointer" onclick="setModalFields(this)"
+                                                    data-toggle="modal" data-id="<%= project.project_id %>" 
+                                                    data-title="<%= project.title %>" data-summary="<%= project.summary %>"
+                                                    data-amount="<%= project.amount %>" data-entry_date="<%= project.entry_date %>"
+                                                    data-due_date="<%= project.due_date %>" data-grade="<%= project.review_grade %>"
+                                                    data-review_date="<%= project.review_date %>" data-reviewer_id="<%= project.reviewer_id %>"
+                                                    data-supervisor_id="<%= project.supervisor_id %>" data-organization_id="<%= project.organization_id %>"
+                                                    data-executive_id="<%= project.executive_id %>" data-program_id="<%= project.program_id %>"
+                                                    data-target="#editModal">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                    <a class="btn btn-primary" id="show-btn" href="/projects/project-creation-page"
+                >+ Add Project</a>
+                <a class="btn btn-primary" id="show-btn" href="/projects/project-based-on-date"
+                >Search Projects Based on Date</a>
+                                </tbody>
+                            </table>
+                        </div>
+                    <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setModalFields(row) {
+            document.getElementById("id").value = row.dataset.id;
+            document.getElementById("title").value = row.dataset.title;
+            document.getElementById("summary").value = row.dataset.summary;
+            document.getElementById("amount").value = row.dataset.amount;
+            document.getElementById("entry_date").value = row.dataset.entry_date;
+            document.getElementById("due_date").value = row.dataset.due_date;
+            document.getElementById("grade").value = row.dataset.grade;
+            document.getElementById("review_date").value = row.dataset.review_date;
+            document.getElementById("reviewer_id").value = row.dataset.reviewer_id;
+            document.getElementById("supervisor_id").value = row.dataset.supervisor_id;
+            document.getElementById("organization_id").value = row.dataset.organization_id;
+            document.getElementById("executive_id").value = row.dataset.executive_id;
+            document.getElementById("program_id").value = row.dataset.program_id;
+
+            document.getElementById("modal-form").action = "/projects/update/" + row.dataset.id;
+            document.getElementById("modal-form").method = "POST";
+        }
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            toastr.options = {
+                "closeButton": true,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": false
+            };
+            /* In order to access variables sent to ejs file to script you must Parse them to string */
+            /* then to parse them back to JSON */
+            let messages = '<%- JSON.stringify(messages) %>';
+            messages = JSON.parse(messages);
+            messages.forEach(({
+                type,
+                value
+            }) => {
+                switch (type) {
+                    case 'error':
+                        toastr.error(value)
+                        break;
+                    case 'success':
+                        toastr.success(value)
+                        break;
+                    case 'warning':
+                        toastr.warning(value)
+                        break;
+                    default:
+                        toastr.info(value)
+                        break;
+                }
+            });
+        })
+    </script>
+</body>
+</html>
