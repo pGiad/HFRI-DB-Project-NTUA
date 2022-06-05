@@ -65,13 +65,11 @@ exports.postUpdateResearcher = (req, res, next) => {
 
         conn.promise().query(sqlQuery, [first_name, last_name, sex, birth_date, recruitment_date, org_id])
         .then(() => {
-            console.log(sqlQuery);
             pool.releaseConnection(conn);
             req.flash('messages', { type: 'success', value: "Successfully updated researcher!" })
             res.redirect('/researchers');
         })
         .catch(err => {
-            console.log(err);
             req.flash('messages', { type: 'error', value: "Something went wrong, Researcher could not be updated." })
             res.redirect('/researchers');
         })
