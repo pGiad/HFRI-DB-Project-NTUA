@@ -8,7 +8,6 @@ DELETE FROM project;
 DELETE FROM executive;
 DELETE FROM researcher;
 DELETE FROM field;
--- DELETE FROM budget_funds;
 DELETE FROM phone_number;
 DELETE FROM organization;
 DELETE FROM program;
