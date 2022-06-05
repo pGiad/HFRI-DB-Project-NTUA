@@ -16,6 +16,19 @@
         body {
             background: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .5));
         }
+        nav{
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: right;
+        text-align: right;
+    }
+    nav ul{
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: left;
+        text-align: left;
+
+    }
     </style>
     
     <div id="editModal" class="modal fade" role="dialog">
@@ -55,12 +68,18 @@
             <div class="col-md-12">
                 <div class="card" id="card-container">
                     <div class="card-body" id="card">
+                        <ul>
                         <a class="btn btn-primary" id="show-btn" href="/researchers/young-researchers"
                 >Most hard-working young researchers</a>
+                        </ul>
+                        <ul>
                 <a class="btn btn-primary" id="show-btn" href="/researchers/research-without-deliverables"
                 >Researchers working on 5 or more projects without deliverables</a>
+                </ul>
+                <ul>
                 <a class="btn btn-primary" id="show-btn" href="/researchers/researcher-projects-view"
                 >View of Relational Schema with projects per researcher</a>
+                </ul>
                     <% if (researchers.length == 0) { %> 
                         <h1 style="margin-top: 5rem;">No Researchers found!</h1>
                     <% } else { %>
@@ -108,8 +127,10 @@
                                             </td>
                                         </tr>
                                     <% }) %>
+                                    <nav>
                                     <a class="btn btn-primary" id="show-btn" href="/researchers/researcher-creation-page"
                 >+ Add Researcher</a>
+                                    </nav>
                                 </tbody>
                             </table>
                         </div>
