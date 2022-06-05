@@ -377,6 +377,7 @@ ORDER BY num DESC, researcher_id ASC;
 CREATE INDEX idx_researcher_id ON works_on(researcher_id);
 CREATE INDEX idx_project_id ON works_on(project_id);
 CREATE INDEX idx_entry_date ON project(entry_date);
+CREATE INDEX idx_birth_date ON researcher(birth_date);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
