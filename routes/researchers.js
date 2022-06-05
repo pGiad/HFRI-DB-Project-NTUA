@@ -12,5 +12,7 @@ router.get('/young-researchers', researchersController.getYoungs);
 router.get('/research-without-deliverables', researchersController.getResWithoutDeliverables);
 router.get('/researcher-projects-view', researchersController.getResearcherProjectsView);
 router.post('/researcher-projects-view/delete', researchersController.postDeleteResearcherProjectsView);
+router.get('/researcher-projects-view/works-on-creation-page', researchersController.getCreateWorksOn);
+router.post('/researcher-projects-view/works-on-create', researchersController.postWorksOn);
 
 module.exports = router;

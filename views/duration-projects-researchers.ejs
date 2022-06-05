@@ -20,7 +20,7 @@
   </head>
   <style>
     body {
-        background: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
+        background: linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, .6));
     }
 </style>
   <body>
@@ -31,45 +31,33 @@
         <div class="col-md-12">
           <div class="card" id="card-container">
             <div class="card-body" id="card">
-              <% if (res_projects_view.length == 0) { %>
-              <h1 style="margin-top: 5rem">No Results found!</h1>
+              <% if (projects_researchers.length == 0) { %>
+              <h1 style="margin-top: 5rem">No Projects found!</h1>
               <% } else { %>
               <div class="table-responsive">
                 <table class="table">
                   <thead>
                     <tr>
+                      <th>Project ID</th>
+                      <th>Title</th>
                       <th>Researcher ID</th>
                       <th>First Name</th>
                       <th>Last Name</th>
-                      <th>Project ID</th>
-                      <th>Title</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <% res_projects_view.forEach((research_projects_view, _) => { %>
+                    <%
+                    projects_researchers.forEach((project_based_on_duration,
+                    _) => { %>
                     <tr>
-                      <td><%= research_projects_view.researcher_id %></td>
-                      <td><%= research_projects_view.first_name %></td>
-                      <td><%= research_projects_view.last_name %></td>
-                      <td><%= research_projects_view.project_id %></td>
-                      <td><%= research_projects_view.title %></td>
-                      <td>
-                          <form method="POST" action="/researchers/researcher-projects-view/delete?researcher_id=<%= research_projects_view.researcher_id %>&project_id=<%= research_projects_view.project_id %>">
-                          <td>
-                            <button
-                              style="all: unset; cursor: pointer"
-                              type="submit"
-                            >
-                              <i class="fa fa-trash"></i>
-                            </button>
-                          </td>
-                      </form>
-                      </td>
+                      <td><%= project_based_on_duration.project_id %></td>
+                      <td><%= project_based_on_duration.title %></td>
+                      <td><%= project_based_on_duration.researcher_id %></td>
+                      <td><%= project_based_on_duration.first_name %></td>
+                      <td><%= project_based_on_duration.last_name %></td>
                     </tr>
                     <% }) %>
-                    <a class="btn btn-primary" id="show-btn" href="/researchers/researcher-projects-view/works-on-creation-page"
-                >+ Add Works On Relation</a>
                   </tbody>
                 </table>
               </div>

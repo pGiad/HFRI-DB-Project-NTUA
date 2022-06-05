@@ -12,5 +12,7 @@ router.get('/org-with-same-num-of-projects', organizationsController.getOrgWithS
 router.get('/organization-projects-view', organizationsController.getOrganizationProjectsView);
 router.get('/phones', organizationsController.getPhones);
 router.post('/phones/delete', organizationsController.postDeletePhone);
+router.get('/phone-creation-page', organizationsController.getCreatePhone);
+router.post('/phone-create', organizationsController.postPhone);
 
 module.exports = router;

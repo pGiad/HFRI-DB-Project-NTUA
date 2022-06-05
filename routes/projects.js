@@ -13,6 +13,12 @@ router.get('/fields', projectsController.getFields);
 router.post('/fields/delete', projectsController.postDeleteProjectField);
 router.post('/deliverables/delete', projectsController.postDeleteDeliverable);
 router.get('/project-based-on-date', projectsController.getSearchByDate);
-router.get('/projects-researchers-date', projectsController.getProjectsResearchersDate);
+router.post('/projects-researchers-date', projectsController.postProjectsResearchersDate);
+router.get('/project-based-on-duration', projectsController.getSearchByDuration);
+router.post('/projects-researchers-duration', projectsController.postProjectsResearchersDuration);
+router.get('/deliverable-creation-page', projectsController.getCreateDeliverable);
+router.post('/deliverable-create', projectsController.postDeliverable);
+router.get('/is-about-creation-page', projectsController.getCreateIsAbout);
+router.post('/is-about-create', projectsController.postIsAbout);
 
 module.exports = router;

@@ -20,10 +20,14 @@
     <div class="container">
         <div class="row" id="row">
             <div class="col-md-12">
-                <form class="form-horizontal" name="name" action="/projects/projects-researchers-date" method="POST">
+                <form class="form-horizontal" name="name" action="/researchers/researcher-projects-view/works-on-create" method="POST">
                     <div class="form-group col-sm-3 mb-3">
-                        <label for="date">Date</label>
-                        <input type="text" class="form-control" name="date" placeholder="Enter date">
+                        <label for="project_id">Project ID</label>
+                        <input type="text" class="form-control" name="project_id" placeholder="Enter project ID">
+                    </div>
+                    <div class="form-group col-sm-3 mb-3">
+                        <label for="researcher_id">Researcher ID</label>
+                        <input type="text" class="form-control" name="researcher_id" placeholder="Enter researcher ID">
                     </div>
                     <button type="submit" class="btn btn-primary btn-submit-custom">Submit</button>
                 </form>

@@ -272,7 +272,7 @@ END&&
 
 -- 3.1) Find projects and researchers on these projects where duration is ...
 CREATE PROCEDURE projects_based_on_duration (duration_var INT) BEGIN
-SELECT project.project_id, project.title, researcher.first_name, researcher.last_name 
+SELECT project.project_id, project.title, researcher.researcher_id, researcher.first_name, researcher.last_name 
 FROM researcher 
 INNER JOIN works_on ON researcher.researcher_id = works_on.researcher_id 
 INNER JOIN project ON project.project_id = works_on.project_id 

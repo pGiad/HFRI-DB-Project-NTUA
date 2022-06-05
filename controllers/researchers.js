@@ -208,3 +208,34 @@ exports.postDeleteResearcherProjectsView = (req, res, next) => {
     })
 
 }
+
+/* Controller to render data shown in create works on page */
+exports.getCreateWorksOn = (req, res, next) => {
+    res.render('create_works_on.ejs', {
+        pageTitle: "Works On Creation Page"
+    })
+}
+
+/* Controller to create a new works on relation in the database */
+exports.postWorksOn = (req, res, next) => {
+
+    /* get necessary data sent */
+    const project_id = req.body.project_id;
+    const researcher_id = req.body.researcher_id;
+
+    /* create the connection, execute query, flash respective message and redirect to projects per researcher view route */
+    pool.getConnection((err, conn) => {
+        var sqlQuery = `INSERT INTO works_on(project_id, researcher_id) VALUES(?, ?)`;
+
+        conn.promise().query(sqlQuery, [project_id, researcher_id])
+        .then(() => {
+            pool.releaseConnection(conn);
+            req.flash('messages', { type: 'success', value: "Successfully added a new Works On relation!" })
+            res.redirect('/researchers/researcher-projects-view');
+        })
+        .catch(err => {
+            req.flash('messages', { type: 'error', value: "Something went wrong, Works On relation could not be added." })
+            res.redirect('/researchers/researcher-projects-view');
+        })
+    })
+}

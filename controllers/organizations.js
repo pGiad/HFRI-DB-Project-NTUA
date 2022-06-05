@@ -212,3 +212,34 @@ exports.postDeletePhone = (req, res, next) => {
     })
 
 }
+
+/* Controller to render data shown in create phone page */
+exports.getCreatePhone = (req, res, next) => {
+    res.render('create_phone.ejs', {
+        pageTitle: "Phone Creation Page"
+    })
+}
+
+/* Controller to create a new phone in the database */
+exports.postPhone = (req, res, next) => {
+
+    /* get necessary data sent */
+    const id = req.body.id;
+    const phone = req.body.phone;
+
+    /* create the connection, execute query, flash respective message and redirect to organizations route */
+    pool.getConnection((err, conn) => {
+        var sqlQuery = `INSERT INTO phone_number(organization_id, phone) VALUES(?, ?)`;
+
+        conn.promise().query(sqlQuery, [id, phone])
+        .then(() => {
+            pool.releaseConnection(conn);
+            req.flash('messages', { type: 'success', value: "Successfully added a new Phone!" })
+            res.redirect('/organizations');
+        })
+        .catch(err => {
+            req.flash('messages', { type: 'error', value: "Something went wrong, Phone could not be added." })
+            res.redirect('/organizations');
+        })
+    })
+}

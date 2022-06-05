@@ -71,13 +71,11 @@ exports.postUpdateProject = (req, res, next) => {
 
         conn.promise().query(sqlQuery, [title, summary, amount, entry_date, due_date, program_id, executive_id, organization_id, supervisor_id, reviewer_id, grade, review_date])
         .then(() => {
-            console.log(sqlQuery);
             pool.releaseConnection(conn);
             req.flash('messages', { type: 'success', value: "Successfully updated project!" })
             res.redirect('/projects');
         })
         .catch(err => {
-            console.log(err);
             req.flash('messages', { type: 'error', value: "Something went wrong, Project could not be updated." })
             res.redirect('/projects');
         })
@@ -235,9 +233,9 @@ exports.getSearchByDate = (req, res, next) => {
 }
 
 /* QUERY 3.1: Controller to retrieve projects, researhcers for particular date from database */
-exports.getProjectsResearchersDate = (req, res, next) => {
+exports.postProjectsResearchersDate = (req, res, next) => {
 
-    const date = req.query.date;
+    const date = req.body.date;
 
     /* check for messages in order to show them when rendering the page */
     let messages = req.flash("messages");
@@ -262,4 +260,105 @@ exports.getProjectsResearchersDate = (req, res, next) => {
         .catch(err => console.log(err))
     })
 
+}
+
+/* Controller to render data shown in create search by duration page */
+exports.getSearchByDuration = (req, res, next) => {
+    res.render('create_search_by_duration.ejs', {
+        pageTitle: "Insert Desired Duration"
+    })
+}
+
+/* QUERY 3.1: Controller to retrieve projects, researhcers for particular duration from database */
+exports.postProjectsResearchersDuration = (req, res, next) => {
+
+    const duration = req.body.duration;
+
+    /* check for messages in order to show them when rendering the page */
+    let messages = req.flash("messages");
+    if (messages.length == 0) messages = [];
+
+    /* create the connection, execute query, render data */
+    pool.getConnection((err, conn) => {
+        
+        conn.promise().query(`SELECT project.project_id, project.title, researcher.researcher_id, researcher.first_name, researcher.last_name 
+                              FROM researcher 
+                              INNER JOIN works_on ON researcher.researcher_id = works_on.researcher_id 
+                              INNER JOIN project ON project.project_id = works_on.project_id 
+                              WHERE project.duration = ${duration};`)
+        .then(([rows, projects_researchers]) => {
+            res.render('duration-projects-researchers.ejs', {
+                pageTitle: "Projects and Researchers for Particular Duration",
+                projects_researchers: rows,
+                messages: messages
+            })
+        })
+        .then(() => pool.releaseConnection(conn))
+        .catch(err => console.log(err))
+    })
+
+}
+
+/* Controller to render data shown in create deliverable page */
+exports.getCreateDeliverable = (req, res, next) => {
+    res.render('create_deliverable.ejs', {
+        pageTitle: "Deliverable Creation Page"
+    })
+}
+
+/* Controller to create a new deliverable in the database */
+exports.postDeliverable = (req, res, next) => {
+
+    /* get necessary data sent */
+    const id = req.body.id;
+    const title = req.body.title;
+    const summary = req.body.summary;
+    const deliver_date = req.body.deliver_date;
+
+    /* create the connection, execute query, flash respective message and redirect to projects route */
+    pool.getConnection((err, conn) => {
+        var sqlQuery = `INSERT INTO deliverable(project_id, title, summary, deliver_date) VALUES(?, ?, ?, ?)`;
+
+        conn.promise().query(sqlQuery, [id, title, summary, deliver_date])
+        .then(() => {
+            pool.releaseConnection(conn);
+            req.flash('messages', { type: 'success', value: "Successfully added a new Deliverable!" })
+            res.redirect('/projects');
+        })
+        .catch(err => {
+            req.flash('messages', { type: 'error', value: "Something went wrong, Deliverable could not be added." })
+            res.redirect('/projects');
+        })
+    })
+}
+
+/* Controller to render data shown in create is about relation page */
+exports.getCreateIsAbout = (req, res, next) => {
+    res.render('create_is_about.ejs', {
+        pageTitle: "Is About relation Creation Page"
+    })
+}
+
+/* Controller to create a new is about relation in the database */
+exports.postIsAbout = (req, res, next) => {
+
+    /* get necessary data sent */
+    const id = req.body.id;
+    const field = req.body.field;
+
+    /* create the connection, execute query, flash respective message and redirect to projects route */
+    pool.getConnection((err, conn) => {
+        var sqlQuery = `INSERT INTO is_about(project_id, field_name) VALUES(?, ?)`;
+
+        conn.promise().query(sqlQuery, [id, field])
+        .then(() => {
+            pool.releaseConnection(conn);
+            req.flash('messages', { type: 'success', value: "Successfully added a new Is About relation!" })
+            res.redirect('/projects');
+        })
+        .catch(err => {
+            req.flash('messages', { type: 'error', value: "Something went wrong, Is About relation could not be added." })
+            res.redirect('/projects');
+        })
+    })
 }
