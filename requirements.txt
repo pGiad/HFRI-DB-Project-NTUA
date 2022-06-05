@@ -1,0 +1,12 @@
+- XAMPP
+- MySQL Workbench
+- NodeJS
+- express
+- mysql2
+- ejs
+- express-session
+- connect-flash
+- nodemon
+- chalk
+- custom-env
+- html-js-confirm
