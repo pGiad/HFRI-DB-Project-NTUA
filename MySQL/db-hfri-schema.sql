@@ -374,9 +374,9 @@ ORDER BY num DESC, researcher_id ASC;
 
 -- Create Indexes
 
-CREATE INDEX idx_researcher_id ON works_on(researcher_id);
-CREATE INDEX idx_project_id ON works_on(project_id);
+CREATE INDEX idx_organization_id ON project(organization_id);
 CREATE INDEX idx_entry_date ON project(entry_date);
+CREATE INDEX idx_due_date ON project(due_date);
 CREATE INDEX idx_birth_date ON researcher(birth_date);
 
 
